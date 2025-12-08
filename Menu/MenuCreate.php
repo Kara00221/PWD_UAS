@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="brand">CafeApp</div>
     <nav>
         <a href="MenuIndex.php">Kembali ke Menu</a>
-        <a href="logout.php">Logout</a>
+        <a href="../logout.php">Logout</a>
     </nav>
 </header>
 
