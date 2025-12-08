@@ -52,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <a href="../Dashboard/Dashboard.php">Dashboard</a>
         <a href="../Menu/MenuIndex.php">Menu Kafe</a>
         <a href="../Profile/ProfileIndex.php">Kembali ke Profil</a>
-        <a href="logout.php">Logout</a>
+        <a href="../logout.php">Logout</a>
     </nav>
 </header>
 
