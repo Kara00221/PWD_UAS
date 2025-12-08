@@ -32,8 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->execute([$email]);
         if ($stmt->fetch()) {
             $errors[] = 'Email sudah terdaftar.';
-        } else {
-            // "Enkripsi" password di sini menggunakan hashing yang aman
+        } else { 
             $passwordHash = password_hash($password, PASSWORD_DEFAULT);
 
             $stmt = $pdo->prepare('INSERT INTO users (name, email, phone, password_hash) VALUES (?, ?, ?, ?)');

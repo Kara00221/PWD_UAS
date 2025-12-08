@@ -2,12 +2,15 @@
 require '../config.php';
 requireLogin();
 
-$stmt = $pdo->prepare('SELECT name, email, phone, created_at FROM users WHERE id = ?');
-$stmt->execute([$_SESSION['user_id']]);
-$user = $stmt->fetch();
+$stmt = $conn->prepare("SELECT name, email, phone, created_at FROM users WHERE id = ?");
+$stmt->bind_param("i", $_SESSION['user_id']);
+$stmt->execute();
+$result = $stmt->get_result();
+$user = $result->fetch_assoc();
+$stmt->close();
 
-if (!$user) {
-    // fallback simpel kalau user tidak ditemukan
+
+if (!$user) { 
     header('Location: logout.php');
     exit;
 }
@@ -50,10 +53,12 @@ $createdAt = date('d M Y H:i', strtotime($user['created_at']));
                 <span class="profile-label">Nama</span>
                 <span class="profile-value"><?= htmlspecialchars($user['name']) ?></span>
             </div>
+
             <div class="profile-row">
                 <span class="profile-label">Email</span>
                 <span class="profile-value"><?= htmlspecialchars($user['email']) ?></span>
             </div>
+
             <div class="profile-row">
                 <span class="profile-label">No. HP</span>
                 <span class="profile-value">

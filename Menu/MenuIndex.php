@@ -1,19 +1,31 @@
 <?php
 require '../config.php';
 requireLogin();
-
-// fitur pencarian sederhana
+ 
 $search = trim($_GET['q'] ?? '');
-if ($search !== '') {
-    $stmt = $pdo->prepare('SELECT * FROM menu_items 
-                           WHERE name LIKE ? OR category LIKE ?
-                           ORDER BY created_at DESC');
+
+if ($search !== '') { 
     $like = '%' . $search . '%';
-    $stmt->execute([$like, $like]);
+
+    $stmt = $conn->prepare("
+        SELECT * FROM menu_items
+        WHERE name LIKE ? OR category LIKE ?
+        ORDER BY created_at DESC
+    ");
+    $stmt->bind_param("ss", $like, $like);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
 } else {
-    $stmt = $pdo->query('SELECT * FROM menu_items ORDER BY created_at DESC');
+    $result = mysqli_query($conn, "SELECT * FROM menu_items ORDER BY created_at DESC");
 }
-$items = $stmt->fetchAll();
+
+$items = [];
+if ($result) {
+    while ($row = mysqli_fetch_assoc($result)) {
+        $items[] = $row;
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -33,6 +45,12 @@ $items = $stmt->fetchAll();
     </nav>
 </header>
 
+<script>
+function confirmDelete() {
+    return confirm('Yakin ingin menghapus menu ini?');
+}
+</script>
+
 <main class="content">
     <div class="page-header">
         <h2>Data Menu Kafe</h2>
@@ -51,8 +69,7 @@ $items = $stmt->fetchAll();
 
     <?php if (count($items) === 0): ?>
         <p class="muted">Belum ada data menu yang sesuai. Tambahkan menu baru atau ubah kata kunci pencarian.</p>
-    <?php else: ?>
-        <!-- sisanya tetap: tabel data-menu -->
+    <?php else: ?> 
         <table class="data-table menu-table">
             <thead>
             <tr>

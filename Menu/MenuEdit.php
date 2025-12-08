@@ -9,10 +9,10 @@ if (!$id || !ctype_digit($id)) {
     exit;
 }
 
-// ambil data menu
-$stmt = $pdo->prepare('SELECT * FROM menu_items WHERE id = ?');
-$stmt->execute([$id]);
-$item = $stmt->fetch();
+
+$sql = "SELECT * FROM menu_items WHERE id = $id";
+$result = mysqli_query($conn, $sql);
+$item = mysqli_fetch_assoc($result);
 
 if (!$item) {
     header('Location: MenuIndex.php');
@@ -37,19 +37,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if (empty($errors)) {
-        $stmtUpdate = $pdo->prepare(
-            'UPDATE menu_items 
-             SET name = ?, category = ?, price = ?, description = ?, is_available = ?
-             WHERE id = ?'
-        );
-        $stmtUpdate->execute([$name, $category, $price, $description, $isAvailable, $id]);
+        $nameEsc        = mysqli_real_escape_string($conn, $name);
+        $categoryEsc    = mysqli_real_escape_string($conn, $category);
+        $descriptionEsc = mysqli_real_escape_string($conn, $description);
+
+        $sqlUpdate = "
+            UPDATE menu_items 
+            SET name = '$nameEsc', 
+                category = '$categoryEsc', 
+                price = $price, 
+                description = '$descriptionEsc', 
+                is_available = $isAvailable
+            WHERE id = $id
+        ";
+
+        mysqli_query($conn, $sqlUpdate);
 
         header('Location: MenuIndex.php');
         exit;
     }
 }
 
-// nilai default untuk form (kalau ada error pakai POST, kalau tidak pakai data DB)
+
 $currentName        = $_POST['name']        ?? $item['name'];
 $currentCategory    = $_POST['category']    ?? $item['category'];
 $currentPrice       = $_POST['price']       ?? $item['price'];

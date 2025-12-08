@@ -2,38 +2,41 @@
 require '../config.php';
 requireLogin();
 
-// ambil data statistik sederhana
+
 $menuTotal = 0;
 $menuAvailable = 0;
 $categories = [];
 $latestMenu = [];
 
-try {
-    // total semua menu
-    $stmtTotal = $pdo->query('SELECT COUNT(*) AS total FROM menu_items');
-    $menuTotal = (int) ($stmtTotal->fetch()['total'] ?? 0);
 
-    // total menu yang available
-    $stmtAvail = $pdo->query('SELECT COUNT(*) AS total FROM menu_items WHERE is_available = 1');
-    $menuAvailable = (int) ($stmtAvail->fetch()['total'] ?? 0);
+$resultTotal = mysqli_query($conn, "SELECT COUNT(*) AS total FROM menu_items");
+$rowTotal = mysqli_fetch_assoc($resultTotal);
+$menuTotal = (int) ($rowTotal['total'] ?? 0);
 
-    // kategori teratas
-    $stmtCat = $pdo->query("SELECT category, COUNT(*) AS total 
-                            FROM menu_items 
-                            WHERE category IS NOT NULL AND category <> ''
-                            GROUP BY category
-                            ORDER BY total DESC");
-    $categories = $stmtCat->fetchAll();
 
-    // 3 menu terbaru
-    $stmtLatest = $pdo->query("SELECT name, price, category 
-                               FROM menu_items 
-                               ORDER BY created_at DESC 
-                               LIMIT 3");
-    $latestMenu = $stmtLatest->fetchAll();
-} catch (PDOException $e) {
-    // kalau ada error, biar dashboard tetap kebuka saja
-}
+$resultAvail = mysqli_query($conn, "SELECT COUNT(*) AS total FROM menu_items WHERE is_available = 1");
+$rowAvail = mysqli_fetch_assoc($resultAvail);
+$menuAvailable = (int) ($rowAvail['total'] ?? 0);
+
+
+$resultCat = mysqli_query($conn, "
+    SELECT category, COUNT(*) AS total 
+    FROM menu_items 
+    WHERE category IS NOT NULL AND category <> ''
+    GROUP BY category
+    ORDER BY total DESC
+");
+$categories = mysqli_fetch_all($resultCat, MYSQLI_ASSOC);
+
+
+$resultLatest = mysqli_query($conn, "
+    SELECT name, price, category 
+    FROM menu_items 
+    ORDER BY created_at DESC 
+    LIMIT 3
+");
+$latestMenu = mysqli_fetch_all($resultLatest, MYSQLI_ASSOC);
+
 ?>
 <!DOCTYPE html>
 <html lang="id">
