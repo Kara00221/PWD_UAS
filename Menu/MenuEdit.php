@@ -71,7 +71,7 @@ $currentAvailable   = isset($_POST['is_available'])
     <nav>
         <a href="Dashboard.php">Dashboard</a>
         <a href="MenuIndex.php">Kembali ke Menu</a>
-        <a href="logout.php">Logout</a>
+        <a href="../logout.php">Logout</a>
     </nav>
 </header>
 
