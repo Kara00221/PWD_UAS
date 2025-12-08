@@ -28,8 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if (empty($errors)) {
-
-        // CEK EMAIL SUDAH TERDAFTAR
+ 
         $emailEsc = mysqli_real_escape_string($conn, $email);
         $sqlCheck = "SELECT id FROM users WHERE email = '$emailEsc'";
         $result = mysqli_query($conn, $sqlCheck);
@@ -40,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             $passwordHash = password_hash($password, PASSWORD_DEFAULT);
 
-            // INSERT USER BARU
+            
             $nameEsc  = mysqli_real_escape_string($conn, $name);
             $phoneEsc = mysqli_real_escape_string($conn, $phone);
 
