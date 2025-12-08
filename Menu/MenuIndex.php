@@ -29,7 +29,7 @@ $items = $stmt->fetchAll();
         <a href="../Dashboard/Dashboard.php">Dashboard</a>
         <a href="../Profile/ProfileIndex.php">Profil</a>
         <a href="../Menu/MenuIndex.php">Menu Kafe</a>
-        <a href="logout.php">Logout</a>
+        <a href="../logout.php">Logout</a>
     </nav>
 </header>
 
@@ -77,9 +77,9 @@ $items = $stmt->fetchAll();
                         <?php endif; ?>
                     </td>
                     <td class="table-actions">
-                        <a href="menu_edit.php?id=<?= $item['id'] ?>" class="link-edit">Edit</a>
+                        <a href="MenuEdit.php?id=<?= $item['id'] ?>" class="link-edit">Edit</a>
                         <span class="divider">|</span>
-                        <a href="menu_delete.php?id=<?= $item['id'] ?>"
+                        <a href="MenuDelete.php?id=<?= $item['id'] ?>"
                            class="link-delete"
                            onclick="return confirmDelete();">Hapus</a>
                     </td>
