@@ -28,17 +28,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if (empty($errors)) {
-        $stmt = $pdo->prepare('SELECT id FROM users WHERE email = ?');
-        $stmt->execute([$email]);
-        if ($stmt->fetch()) {
+
+        // CEK EMAIL SUDAH TERDAFTAR
+        $emailEsc = mysqli_real_escape_string($conn, $email);
+        $sqlCheck = "SELECT id FROM users WHERE email = '$emailEsc'";
+        $result = mysqli_query($conn, $sqlCheck);
+
+        if (mysqli_num_rows($result) > 0) {
             $errors[] = 'Email sudah terdaftar.';
-        } else { 
+        } else {
+
             $passwordHash = password_hash($password, PASSWORD_DEFAULT);
 
-            $stmt = $pdo->prepare('INSERT INTO users (name, email, phone, password_hash) VALUES (?, ?, ?, ?)');
-            $stmt->execute([$name, $email, $phone, $passwordHash]);
+            // INSERT USER BARU
+            $nameEsc  = mysqli_real_escape_string($conn, $name);
+            $phoneEsc = mysqli_real_escape_string($conn, $phone);
 
-            $success = 'Registrasi berhasil. Silakan login.';
+            $sqlInsert = "
+                INSERT INTO users (name, email, phone, password_hash)
+                VALUES ('$nameEsc', '$emailEsc', '$phoneEsc', '$passwordHash')
+            ";
+
+            if (mysqli_query($conn, $sqlInsert)) {
+                $success = 'Registrasi berhasil. Silakan login.';
+            } else {
+                $errors[] = 'Gagal mendaftar: ' . mysqli_error($conn);
+            }
         }
     }
 }
@@ -71,13 +86,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <form method="post" action="register.php" class="auth-form">
         <label>Nama Lengkap</label>
-        <input type="text" name="name" value="<?= htmlspecialchars($_POST['name'] ?? '') ?>" required>
+        <input type="text" name="name"
+               value="<?= htmlspecialchars($_POST['name'] ?? '') ?>" required>
 
         <label>Email</label>
-        <input type="email" name="email" value="<?= htmlspecialchars($_POST['email'] ?? '') ?>" required>
+        <input type="email" name="email"
+               value="<?= htmlspecialchars($_POST['email'] ?? '') ?>" required>
 
         <label>No. HP</label>
-        <input type="text" name="phone" value="<?= htmlspecialchars($_POST['phone'] ?? '') ?>">
+        <input type="text" name="phone"
+               value="<?= htmlspecialchars($_POST['phone'] ?? '') ?>">
 
         <label>Password</label>
         <input type="password" name="password" required>
