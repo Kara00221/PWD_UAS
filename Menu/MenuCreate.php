@@ -19,8 +19,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if (empty($errors)) {
-        $stmt = $pdo->prepare('INSERT INTO menu_items (name, description, price, category, is_available) VALUES (?, ?, ?, ?, ?)');
-        $stmt->execute([$name, $description, $price, $category, $available]);
+        $nameEsc        = mysqli_real_escape_string($conn, $name);
+        $descEsc        = mysqli_real_escape_string($conn, $description);
+        $categoryEsc    = mysqli_real_escape_string($conn, $category);
+
+        $sql = "
+            INSERT INTO menu_items (name, description, price, category, is_available)
+            VALUES ('$nameEsc', '$descEsc', '$price', '$categoryEsc', '$available')
+        ";
+
+        mysqli_query($conn, $sql);
+
         header('Location: MenuIndex.php');
         exit;
     }
@@ -91,4 +100,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </form>
 </main>
 </body>
-</html>
+</html> 

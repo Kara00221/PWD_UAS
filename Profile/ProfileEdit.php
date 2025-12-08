@@ -5,13 +5,13 @@ requireLogin();
 $errors = [];
 $success = '';
 
-// ambil data user saat ini
-$stmt = $pdo->prepare('SELECT name, email, phone FROM users WHERE id = ?');
-$stmt->execute([$_SESSION['user_id']]);
-$user = $stmt->fetch();
+$id = $_SESSION['user_id'];
 
-if (!$user) {
-    // kalau user sudah tidak ada di DB, logout saja
+$sql = "SELECT name, email, phone FROM users WHERE id = $id";
+$result = mysqli_query($conn, $sql);
+$user = mysqli_fetch_assoc($result);
+
+if (!$user) { 
     header('Location: ../logout.php');
     exit;
 }
@@ -25,16 +25,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if (empty($errors)) {
-        $stmtUpdate = $pdo->prepare('UPDATE users SET name = ?, phone = ? WHERE id = ?');
-        $stmtUpdate->execute([$name, $phone, $_SESSION['user_id']]);
+        $stmt = $conn->prepare("UPDATE users SET name = ?, phone = ? WHERE id = ?");
+        $stmt->bind_param("ssi", $name, $phone, $id);
+        $stmt->execute();
 
         $_SESSION['user_name'] = $name;
         $success = 'Profil berhasil diperbarui.';
 
-        // refresh data user
-        $stmt = $pdo->prepare('SELECT name, email, phone FROM users WHERE id = ?');
-        $stmt->execute([$_SESSION['user_id']]);
-        $user = $stmt->fetch();
+       
+        $result = mysqli_query($conn, "SELECT name, email, phone FROM users WHERE id = $id");
+        $user = mysqli_fetch_assoc($result);
     }
 }
 ?>

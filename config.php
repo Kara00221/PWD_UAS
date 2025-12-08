@@ -2,19 +2,21 @@
 session_start();
 
 $host = 'localhost';
-$db   = 'cafe_db';
-$user = 'root';       // ganti sesuai environment
+$db   = 'cafe_db2';
+$user = 'root';
 $pass = '';
 $charset = 'utf8mb4';
 
-$dsn = "mysql:host=$host;dbname=$db;charset=$charset";
+ 
+$conn = mysqli_connect($host, $user, $pass, $db);
 
-try {
-    $pdo = new PDO($dsn, $user, $pass);
-    
-} catch (PDOException $e) {
-    die('Database connection failed: ' . $e->getMessage());
+
+if (!$conn) {
+    die('Database connection failed: ' . mysqli_connect_error());
 }
+
+
+mysqli_set_charset($conn, $charset);
 
 function isLoggedIn(): bool {
     return isset($_SESSION['user_id']);

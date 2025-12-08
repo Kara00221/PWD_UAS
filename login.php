@@ -1,5 +1,5 @@
 <?php
-require 'config.php';
+require 'config.php'; 
 
 $errors = [];
 
@@ -10,18 +10,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($email === '' || $password === '') {
         $errors[] = 'Email dan password wajib diisi.';
     } else {
-        $stmt = $pdo->prepare('SELECT id, name, password_hash FROM users WHERE email = ?');
-        $stmt->execute([$email]);
-        $user = $stmt->fetch();
+
+        
+        $stmt = $conn->prepare("SELECT id, name, password_hash FROM users WHERE email = ?");
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+        $user = $result->fetch_assoc();
+        
 
         if ($user && password_verify($password, $user['password_hash'])) {
             $_SESSION['user_id']   = $user['id'];
             $_SESSION['user_name'] = $user['name'];
+
             header('Location: /CAFE_DB/Dashboard/Dashboard.php');
             exit;
         } else {
             $errors[] = 'Email atau password salah.';
         }
+
+        $stmt->close();
     }
 }
 ?>
