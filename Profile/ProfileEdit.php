@@ -44,15 +44,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <title>Edit Profil - CafeApp</title>
     <link rel="stylesheet" href="../assets/style.css">
+    <link rel="icon" class="icon-logo" href="/cafe_db/img/icon.png" type="image/png"/>
 </head>
 <body>
 <header class="main-header">
-    <div class="brand">CafeApp</div>
+    <img class="logo" src="/cafe_db/img/icon.png" alt="logo">
     <nav>
         <a href="../Dashboard/Dashboard.php">Dashboard</a>
-        <a href="../Menu/MenuIndex.php">Menu Kafe</a>
         <a href="../Profile/ProfileIndex.php">Kembali ke Profil</a>
-        <a href="../logout.php">Logout</a>
+        <a href="../Menu/MenuIndex.php">Menu Kafe</a>
     </nav>
 </header>
 

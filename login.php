@@ -40,10 +40,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <title>Login - CafeApp</title>
     <link rel="stylesheet" href="assets/style.css">
+    <link rel="icon" class="icon-logo" href="/cafe_db/img/icon.png" type="image/png"/>
 </head>
 <body class="cafe-bg">
 <div class="auth-container">
-    <h1>CafeApp</h1>
+    <img class="logo" src="/cafe_db/img/icon.png" alt="logo">
     <h2>Login</h2>
 
     <?php if (!empty($errors)): ?>

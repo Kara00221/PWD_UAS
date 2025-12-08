@@ -18,13 +18,29 @@ body {
     align-items: center;
 }
 
+.auth-container .logo {
+    width: 120px;
+    height: auto;
+    display: block;
+    margin: 0 auto 12px auto;
+    object-fit: contain;
+    border-radius: 12px;
+}
+
+.main-header .logo {
+    height: 48px;
+    width: 58px;
+    object-fit: contain;
+    display: block;
+}
+
 .main-header .brand {
     font-weight: 700;
     letter-spacing: 0.08em;
 }
 
 .main-header nav a {
-    color: #f7f2e9;
+    color: #ffffff;
     text-decoration: none;
     margin-left: 16px;
     font-size: 0.95rem;
@@ -370,6 +386,17 @@ body {
     font-size: 0.9rem;
     color: #5b4335;
 }
+
+.form-group select {
+    width: 100%;
+    padding: 8px 10px;
+    border-radius: 8px;
+    border: 1px solid #d5c5b5;
+    font-size: 0.95rem;
+    box-sizing: border-box;
+    background-color: #fffdf8;
+}
+
 
 /*=== ^^^ ===*/
 

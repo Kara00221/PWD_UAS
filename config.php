@@ -2,7 +2,7 @@
 session_start();
 
 $host = 'localhost';
-$db   = 'cafe_db2';
+$db   = 'cafe_db';
 $user = 'root';
 $pass = '';
 $charset = 'utf8mb4';

@@ -33,10 +33,11 @@ if ($result) {
     <meta charset="UTF-8">
     <title>Menu Kafe - CafeApp</title>
     <link rel="stylesheet" href="../assets/style.css">
+    <link rel="icon" class="icon-logo" href="/cafe_db/img/icon.png" type="image/png"/>
 </head>
 <body>
 <header class="main-header">
-    <div class="brand">CafeApp</div>
+    <img class="logo" src="/cafe_db/img/icon.png" alt="logo">
     <nav>
         <a href="../Dashboard/Dashboard.php">Dashboard</a>
         <a href="../Profile/ProfileIndex.php">Profil</a>

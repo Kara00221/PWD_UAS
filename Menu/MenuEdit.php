@@ -73,14 +73,14 @@ $currentAvailable   = isset($_POST['is_available'])
     <meta charset="UTF-8">
     <title>Edit Menu - CafeApp</title>
     <link rel="stylesheet" href="../assets/style.css">
+    <link rel="icon" class="icon-logo" href="/cafe_db/img/icon.png" type="image/png"/>
 </head>
 <body>
 <header class="main-header">
-    <div class="brand">CafeApp</div>
+    <img class="logo" src="/cafe_db/img/icon.png" alt="logo">
     <nav>
         <a href="Dashboard.php">Dashboard</a>
         <a href="MenuIndex.php">Kembali ke Menu</a>
-        <a href="../logout.php">Logout</a>
     </nav>
 </header>
 
@@ -102,13 +102,16 @@ $currentAvailable   = isset($_POST['is_available'])
                    value="<?= htmlspecialchars($currentName) ?>">
         </div>
 
-        <div class="form-row">
-            <div class="form-group">
-                <label for="category">Kategori</label>
-                <input type="text" id="category" name="category"
-                       placeholder="Contoh: Coffee, Tea, Snack"
-                       value="<?= htmlspecialchars($currentCategory) ?>">
-            </div>
+    <div class="form-row">
+        <div class="form-group">
+            <label for="category">Kategori</label>
+            <select id="category" name="category">
+                <option value="">-- Pilih kategori --</option>
+                <option value="Coffee">Coffee</option>
+                <option value="Tea">Tea</option>
+                <option value="Snack">Snack</option>
+            </select>
+        </div>
             <div class="form-group">
                 <label for="price">Harga (Rp)</label>
                 <input type="number" id="price" name="price" step="1000" min="0" required

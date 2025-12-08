@@ -42,12 +42,13 @@ $latestMenu = mysqli_fetch_all($resultLatest, MYSQLI_ASSOC);
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <title>Dashboard - CafeApp</title>
+    <title>Dashboard</title>
+    <link rel="icon" class="icon-logo" href="/cafe_db/img/icon.png" type="image/png"/>
     <link rel="stylesheet" href="../assets/style.css">
 </head>
 <body>
 <header class="main-header">
-    <div class="brand">CafeApp</div>
+    <img class="logo" src="/cafe_db/img/icon.png" alt="logo">
     <nav>
         <a href="../Dashboard/Dashboard.php">Dashboard</a>
         <a href="../Profile/ProfileIndex.php">Profil</a>
@@ -59,12 +60,12 @@ $latestMenu = mysqli_fetch_all($resultLatest, MYSQLI_ASSOC);
 <main class="content">
     <section class="hero-card">
         <div>
-            <h1>Selamat datang, <?= htmlspecialchars($_SESSION['user_name'] ?? '') ?> 👋</h1>
-            <p>Ini adalah panel manajemen kafe kamu. Dari sini kamu bisa mengelola profil dan data menu kafe.</p>
+            <h1>Selamat datang, <?= htmlspecialchars($_SESSION['user_name'] ?? '') ?> ^_^</h1>
+            <p>Halo, Ini adalah panel manajemen kafe. Disini kita akan mengelola semua menu.</p>
         </div>
         <div class="hero-badge">
             <span class="pill">Mode admin kafe</span>
-            <p class="hero-sub">Pastikan stok dan harga selalu up to date.</p>
+            <p class="hero-sub">Pastikan stok dan harga selalu up to date ya :></p>
         </div>
     </section>
 
@@ -81,7 +82,6 @@ $latestMenu = mysqli_fetch_all($resultLatest, MYSQLI_ASSOC);
                     <span class="stat-value green"><?= $menuAvailable ?></span>
                 </div>
             </div>
-            <a href="../Menu/MenuIndex.php" class="btn-link">Kelola menu →</a>
         </article>
 
         <article class="card">
@@ -127,7 +127,7 @@ $latestMenu = mysqli_fetch_all($resultLatest, MYSQLI_ASSOC);
     </section>
 
     <section class="tips-section">
-        <h2>Tips cepat</h2>
+        <h2>Tips</h2>
         <p>Update menu setiap ada perubahan harga atau stok supaya kasir dan pelanggan tidak bingung. Gunakan kategori seperti <strong>Coffee</strong>, <strong>Tea</strong>, atau <strong>Snack</strong> agar menu lebih mudah dicari.</p>
     </section>
 </main>
