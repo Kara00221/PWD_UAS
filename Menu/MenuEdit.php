@@ -79,7 +79,7 @@ $currentAvailable   = isset($_POST['is_available'])
 <header class="main-header">
     <img class="logo" src="/cafe_db/img/icon.png" alt="logo">
     <nav>
-        <a href="Dashboard.php">Dashboard</a>
+        <a href="../Dashboard/Dashboard.php">Dashboard</a>
         <a href="MenuIndex.php">Kembali ke Menu</a>
     </nav>
 </header>
